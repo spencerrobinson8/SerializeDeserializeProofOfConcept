@@ -21,6 +21,7 @@ public:
       unsigned int getFrameDuration();
       unsigned int getSizeX();
       unsigned int getSizeY();
+      void addFrame();
 //    bool getOnionSkinEnabled();
 private:
     QList<QGraphicsScene*> frames;

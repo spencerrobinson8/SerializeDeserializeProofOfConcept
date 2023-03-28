@@ -3,9 +3,9 @@
 
 simpleTimeline::simpleTimeline(unsigned int sizeX, unsigned int sizeY, QObject *parent)
     : QObject(parent)
-    , frameDuration(100)
-    , activeFrame(0)
     , activeLayer(0)
+    , activeFrame(0)
+    , frameDuration(100)
     , size(sizeX, sizeY)
 {
             
@@ -23,20 +23,24 @@ simpleTimeline::~simpleTimeline(){
 
 }
 
+void simpleTimeline::addFrame() {
+    QGraphicsScene* s = new QGraphicsScene();
+    frames.push_back(s);
+}
 
 QVector<QGraphicsScene*> simpleTimeline::getFrames(){
     return frames;
 }
 
-unsigned int simpleTimeline::getActiveLayer(){
-    return activeLayer;
-}
-unsigned int simpleTimeline::getActiveFrame(){
-    return activeFrame;
-}
-unsigned int simpleTimeline::getFrameDuration(){
-    return frameDuration;
-}
+//unsigned int simpleTimeline::getActiveLayer(){
+//    return activeLayer;
+//}
+//unsigned int simpleTimeline::getActiveFrame(){
+//    return activeFrame;
+//}
+//unsigned int simpleTimeline::getFrameDuration(){
+//    return frameDuration;
+//}
 unsigned int simpleTimeline::getSizeX(){
     return size.width();
 }

@@ -9,23 +9,32 @@
 #include <QString>
 #include <QFile>
 #include <QDir>
-using std::cout;
+#include <QVector>
+#include <QDebug>
 
 
 void save(simpleTimeline& t){
 
     QJsonObject jTimeline;
-    jTimeline["activeLayer"] = (int) t.getActiveLayer();
-    jTimeline["activeFrame"] = (int) t.getActiveFrame();
-//    QJsonArray frames;
-//    foreach (QGraphicsScene s, t.getFrames()){
-//        frames.push_back(s);
-//    }
-//    jTimeline["frames"] = frames;
-//    jTimeline["onionSkinEnabled"] = t.getOnionSkinEnabled();
-    jTimeline["width"] = (int)t.getSizeX();
     jTimeline["height"] =(int) t.getSizeY();
-    jTimeline["frameDuration"] = (int)t.getFrameDuration();
+    jTimeline["width"] = (int)t.getSizeX();
+    jTimeline["numberOfFrames"] = (int)t.getFrames().size();
+    QList<QRgb> list;
+    int n = 0;
+    QJsonArray arr2;
+    QJsonArray arr;
+
+    foreach(QGraphicsScene s, t.getFrames()) {
+        QImage image(s.sceneRect().size().toSize(), QImage::Format_ARGB32);
+        list = image.colorTable();
+        foreach(QRgb color, list) {
+            arr.push_back((int)color);
+        }
+    }
+    arr2.push_back(arr);
+    jTimeline["frame" + n] = arr2;
+    n++;
+
     QJsonDocument doc( jTimeline );
     QFile file("JsonFile.ssp");
     if(file.open(QFile::WriteOnly)){
@@ -41,9 +50,15 @@ void load(){
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    simpleTimeline timeline(64,64);
-    save(timeline);
+    simpleTimeline* timeline = new simpleTimeline(64, 64);
+//    timeline->addFrame();
+//    timeline->addFrame();
+    save(*timeline);
     load();
+    return 0;
+
+
+
     return a.exec();
 
 }
