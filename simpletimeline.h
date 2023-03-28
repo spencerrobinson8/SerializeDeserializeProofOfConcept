@@ -2,7 +2,10 @@
 #define SIMPLETIMELINE_H
 
 #include "simpleframe.h"
-#include <QObject>
+#include <QWidget>
+#include <QTimer>
+#include <QPixmap>
+#include <QGraphicsScene>
 
 
 class simpleTimeline : public QObject
@@ -10,24 +13,22 @@ class simpleTimeline : public QObject
     Q_OBJECT
 
 public:
-    explicit simpleTimeline(QObject *parent = nullptr);
-    explicit simpleTimeline(const simpleTimeline&, QObject *parent = nullptr);
+    simpleTimeline(unsigned int sizeX, unsigned int sizeY, QObject* parent = nullptr);
     ~simpleTimeline();
-    QVector<QImage>* getFrames();
-    QImage* getActiveImage();
-    simpleFrame* getActiveFrame();
-    unsigned int getFrameRate();
-    unsigned int getSizeX();
-    unsigned int getSizeY();
-    bool getOnionSkinEnabled();
+      QList<QGraphicsScene*> getFrames();
+      unsigned int getActiveLayer();
+      unsigned int getActiveFrame();
+      unsigned int getFrameDuration();
+      unsigned int getSizeX();
+      unsigned int getSizeY();
+//    bool getOnionSkinEnabled();
 private:
-    QVector<QImage>* frames;
-    QImage* activeImage;
-    simpleFrame* activeFrame;
-    unsigned int frameRate;
-    unsigned int sizeX;
-    unsigned int sizeY;
-    bool onionSkinEnabled;
+    QList<QGraphicsScene*> frames;
+    unsigned int activeLayer;
+    unsigned int activeFrame;
+    unsigned int frameDuration;
+    QSize size;
+    //bool onionSkinEnabled;
 };
 
 #endif // SIMPLETIMELINE_H

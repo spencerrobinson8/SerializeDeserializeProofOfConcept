@@ -1,5 +1,7 @@
 QT += gui
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 CONFIG += c++17 console
 CONFIG -= app_bundle
 
@@ -21,5 +23,4 @@ HEADERS += \
     simpleframe.h \
     simpletimeline.h
 
-DISTFILES += \
-    JsonFile
+DISTFILES +=
